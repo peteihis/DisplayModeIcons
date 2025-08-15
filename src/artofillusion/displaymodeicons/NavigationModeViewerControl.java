@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 - 2023 Petri Ihalainen
+ *  Copyright (C) 2019 - 2025 Petri Ihalainen
  *
  *  This program is free software; you can redistribute it and/or modify it under the
  *  terms of the GNU General Public License as published by the Free Software
@@ -52,7 +52,8 @@ public class NavigationModeViewerControl implements ViewerControl
     private ImageIcon buttonIcon[], arrowIconLo, arrowIconHi;
     private BLabel arrowLabel, selectedLabel;
     private BPopupMenu menu;
- 
+    private boolean controlViewerCanvas;
+
     public NavigationModeButtons(ViewerCanvas view)
     {
       super();
@@ -98,6 +99,7 @@ public class NavigationModeViewerControl implements ViewerControl
       addEventLink(MouseEnteredEvent.class, this, "mouseIn");
       addEventLink(MouseExitedEvent.class,  this, "mouseOut");
       addEventLink(ToolTipEvent.class,      this, "showToolTip");
+      setControlViewerCanvas();
     }
 
     private void viewChanged()
@@ -147,8 +149,18 @@ public class NavigationModeViewerControl implements ViewerControl
             view.perspectiveControlEnabled = false;
           else
             view.perspectiveControlEnabled = true;
-          view.lastSetNavigation = selectedMode;
-          view.setNavigationMode(selectedMode);
+
+          String AoIversion = artofillusion.ArtOfIllusion.getVersion();
+          if (AoIversion.startsWith("3.1")   || 
+              AoIversion.startsWith("3.2.0") ||
+              AoIversion.startsWith("3.2.1"))
+          {
+            // In later AoI:s ViewerCanvas takes care of these itself.
+            // as it should have in the first place.
+
+            view.lastSetNavigation = selectedMode;
+            view.setNavigationMode(selectedMode);
+          }
         }
         catch(java.lang.NoSuchFieldError error)
         {
@@ -164,6 +176,12 @@ public class NavigationModeViewerControl implements ViewerControl
       buttonIcon[3] = ThemeManager.getIcon("displaymodeicons:disabled/navigation_drive");
       for (int b = 0; b < buttonIcon.length; b++)
         ((BMenuItem)menu.getChild(b)).setIcon(buttonIcon[b]);
+    }
+    
+    private void setControlViewerCanvas()
+    {
+      String version = artofillusion.getVersion();
+      
     }
   }
 }

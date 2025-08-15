@@ -9,9 +9,12 @@
      The icons provide quick selection of display-, perpective- and navigationmodes.
   </description>
   <history>
+    <log version="2.5" date="15 August 2025" author="Petri Ihalainen">
+       - Update for the nex AoI release with perspective/navigation fixes.
+    </log>
     <log version="2.4" date="08 October 2023" author="Petri Ihalainen">
        - Fixed navigation down menu width
-	   - Added text to navigation menu items.
+       - Added text to navigation menu items.
        - Added adaptive tool tip texts
        - Added translations
     </log>
